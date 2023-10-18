@@ -10,6 +10,33 @@ def equalize_image(image):
     equalized = cv2.equalizeHist(image)
     return cv2.cvtColor(equalized, cv2.COLOR_GRAY2BGR)
 
+def edge_detection(image, method, low_threshold=50):
+    if method == 'robert':
+        kernel_x = np.array([[1, 0], [0, -1]])
+        kernel_y = np.array([[0, 1], [-1, 0]])
+        gradient_x = cv2.filter2D(image, -1, kernel_x)
+        gradient_y = cv2.filter2D(image, -1, kernel_y)
+        gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
+        f = gradient_magnitude - image
+        return f
+    elif method == 'prewitt':
+        kernel_x = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]])
+        kernel_y = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1]])
+        gradient_x = cv2.filter2D(image, -1, kernel_x)
+        gradient_y = cv2.filter2D(image, -1, kernel_y)
+        gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
+        f = gradient_magnitude - image
+        return f
+    elif method == 'sobel':
+        gradient_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
+        gradient_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
+        gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
+        f = gradient_magnitude - image
+        return f
+    elif method == 'canny':
+        edges = cv2.Canny(image, low_threshold, low_threshold * 3)
+        return cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
+        
 def morph_ops(image, kernel):
     # Apply binary threshold to the image
     _, gray_image = cv2.threshold(image, 100, 255, cv2.THRESH_BINARY)
@@ -47,6 +74,7 @@ def predict_class(image):
     predicted_label = class_mapping[predictions.argmax(axis=1)[0]]
 
     return predicted_label
+
 st.markdown(
         f"""
         <style>
@@ -62,7 +90,7 @@ st.markdown(
 st.title("Brain Tumor Classification")
 uploaded_image = st.sidebar.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 
-choice = st.sidebar.selectbox("Choose the Operation",('Predict Type','Histogram Equalization','Edge Detection','Morphological Operations','Spatial Filtering','Frequency Filtering'))
+choice = st.sidebar.selectbox("Choose the Operation",('Predict Type','Histogram Equalization','Edge Detection','Morphological Operations','Filtering'))
 
 if uploaded_image is not None:
     img = tf.image.decode_image(uploaded_image.read(), channels=3)
@@ -100,7 +128,15 @@ if uploaded_image is not None:
         with col2:
             st.image(o_im,caption = "Image After Opening",width = 300)
             st.image(d_im,caption = "Image After Dilaiton",width = 300)
-        
+    elif choice == "Edge Detection":
+        method = st.selectbox("Select the Method",("Canny","Robert","Sobel","Prewitt"))
+        edge = edge_detection(img2,method.lower())
+        try : 
+            st.image(edge)
+        except:
+            st.image(edge,clamp=True, channels='GRAY')
+    elif choice == "Filtering":
+        st.selectbox("Select the Method",("Gaussian"))
 else:
     st.header("About")
 
