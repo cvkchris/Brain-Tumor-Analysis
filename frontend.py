@@ -6,7 +6,7 @@ from tensorflow.image import resize
 import tensorflow as tf
 # import Morphological_Ops.ipynb as shit
 
-shit.kirees()
+# shit.kirees()
 
 # Load the saved model
 model = load_model('Brain_Tumor_cnn.h5')
