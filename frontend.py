@@ -10,6 +10,16 @@ def equalize_image(image):
     equalized = cv2.equalizeHist(image)
     return cv2.cvtColor(equalized, cv2.COLOR_GRAY2BGR)
 
+def filtering(image,method,kernel_size):
+    if method == 'Median':
+        filtered_image = cv2.medianBlur(image,kernel_size)
+    elif method == 'Mean':
+        mean_kernel = np.ones((kernel_size, kernel_size), np.float32) / (kernel_size * kernel_size)
+        filtered_image = cv2.filter2D(image, -1, mean_kernel)
+    elif method == 'Gaussian':
+        sigma_x = st.slider("Select the Sigma Value",0,20,1)
+        filtered_image = cv2.GaussianBlur(image, (kernel_size, kernel_size), sigma_x)
+    return filtered_image
 def edge_detection(image, method, low_threshold=50):
     if method == 'robert':
         kernel_x = np.array([[1, 0], [0, -1]])
@@ -136,7 +146,15 @@ if uploaded_image is not None:
         except:
             st.image(edge,clamp=True, channels='GRAY')
     elif choice == "Filtering":
-        st.selectbox("Select the Method",("Gaussian"))
+        method = st.selectbox("Select the Method",("Mean","Median","Gaussian"))
+        if method =='Mean':
+            kernel_size = st.slider("Select the Kernel Size",0,20,5)    
+            filter = filtering(img2,method,kernel_size)
+            st.image(filter,clamp=True, channels='GRAY')
+        else:
+            kernel_size = st.slider("Select the Kernel Size",1,21,5,step=2)    
+            filter = filtering(img2,method,kernel_size)
+            st.image(filter,clamp=True, channels='GRAY')
 else:
     st.header("About")
 
