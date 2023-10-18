@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.image import resize
 import tensorflow as tf
-import Morphological_Ops.ipynb as shit
+# import Morphological_Ops.ipynb as shit
 
 shit.kirees()
 
