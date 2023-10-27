@@ -97,7 +97,7 @@ st.markdown(
         """,
         unsafe_allow_html=True
     )
-st.title("Brain Tumor Classification")
+st.title("Brain Tumor Classification and Analysis")
 uploaded_image = st.sidebar.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 
 choice = st.sidebar.selectbox("Choose the Operation",('Predict Type','Histogram Equalization','Edge Detection','Morphological Operations','Filtering'))
@@ -161,7 +161,7 @@ else:
     st.header("About")
 
     # Introduction
-    st.write("This application is designed to help you analyze brain tumor images. It provides various image processing techniques and information about the creator.")
+    st.write("This application is designed to help you analyze brain tumor images. It provides various image processing techniques inorder to analyse the brain images.It also predicts the type of tumor present in the brain image using Convolutional Neural Network (CNN)")
 
     # Types of Brain Tumors
     st.subheader("Types of Brain Tumors")
@@ -173,6 +173,9 @@ else:
 
     st.header("Operations this app supports")
     # Edge Detection
+    st.subheader("Predict Type")
+    st.write("The Operation helps the user to predict the type of tumor present in the image. It is done using Deep learning model (CNN).")
+
     st.subheader("Edge Detection")
     st.write("Edge detection is a technique used to identify the boundaries of objects within an image. It helps in highlighting the edges of structures in brain tumor images, making it easier to analyze them.")
 
@@ -183,6 +186,9 @@ else:
     # Morphological Operations
     st.subheader("Morphological Operations")
     st.write("Morphological operations involve the use of structuring elements to process binary images. These operations, such as dilation and erosion, can help in enhancing or removing certain features in the image.")
+   
+    st.subheader("Filtering")
+    st.write("Filtering is an image processing technique used to change the appearance of an image by altering the colors of the pixels. It includes Mean filter, Median filter, and Gaussion filter which helps to remove various noises in the image like Salt and Pepper noise, Speckle noise, Gaussian noise, Poisson Noise")
 
     # Creator's Name
     st.header("Creator Info")
