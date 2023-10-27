@@ -21,6 +21,9 @@ Histogram equalization is a method used to improve the contrast of an image by r
 ### Morphological Operations
 Morphological operations involve the use of structuring elements to process binary images. These operations, such as dilation and erosion, can help in enhancing or removing certain features in the image.
 
+## Deployment Link
+[Brain Tumor Analysis Deployment Link](https://brain-tumor-analysis.streamlit.app/)
+
 ## Creator Info
 This Brain Tumor Analysis App was created by :
 
