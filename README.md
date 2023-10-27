@@ -1,15 +1,14 @@
 # Brain-Tumor-Analysis
 
 ## About
-This application is designed to help you analyze brain tumor images. It provides various image processing techniques and information about the creator.
+This application is designed to help you analyze brain tumor images. It provides various image processing techniques on MRI images and classifies the image into 4 classes using a CNN model. 
 
-## Types of Brain Tumors
-There are several types of brain tumors, including:
-
+### Classes of MRI Image
+The 4 types of MRI images used to train the model are:
 * Glioma Tumor
-* No Tumor (Normal Brain)
 * Pituitary Tumor
 * Meningioma Tumor
+* No Tumor (Normal Brain)
 
 ## Operations this app supports
 ### Edge Detection
@@ -22,7 +21,7 @@ Histogram equalization is a method used to improve the contrast of an image by r
 Morphological operations involve the use of structuring elements to process binary images. These operations, such as dilation and erosion, can help in enhancing or removing certain features in the image.
 
 ## Deployment Link
-[Brain Tumor Analysis Deployment Link](https://brain-tumor-analysis.streamlit.app/)
+[Brain Tumor Analysis](https://brain-tumor-analysis.streamlit.app/)
 
 ## Creator Info
 This Brain Tumor Analysis App was created by :
