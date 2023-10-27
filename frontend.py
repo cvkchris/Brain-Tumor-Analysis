@@ -47,9 +47,9 @@ def edge_detection(image, method, low_threshold=50):
         edges = cv2.Canny(image, low_threshold, low_threshold * 3)
         return cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
         
-def morph_ops(image, kernel):
+def morph_ops(image, kernel,thresh):
     # Apply binary threshold to the image
-    _, gray_image = cv2.threshold(image, 100, 255, cv2.THRESH_BINARY)
+    _, gray_image = cv2.threshold(image, thresh, 255, cv2.THRESH_BINARY)
 
     # Apply morphological operations on the binary image
     closed_image = cv2.morphologyEx(gray_image, cv2.MORPH_CLOSE, kernel)
@@ -129,8 +129,10 @@ if uploaded_image is not None:
             st.image(equalized_image,caption = "Equalized Image",width = 300)
     
     elif choice == 'Morphological Operations':
-        kernel = np.ones((7,7), np.uint8)
-        c_im,o_im,e_im,d_im = morph_ops(img2,kernel)
+        kernel = st.number_input('Enter Kernel Size',0,10,3)
+        kernel = np.ones((kernel,kernel), np.uint8)
+        thresh = st.slider("Select threshold",0,200,50)
+        c_im,o_im,e_im,d_im = morph_ops(img2,kernel,thresh)
         col1, col2 = st.columns(2)
         with col1:
             st.image(c_im,caption = "Image After Closing",width = 300)
